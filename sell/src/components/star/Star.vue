@@ -4,11 +4,11 @@
 	</div>
 </template>
 <script>
-	const LENGTH = 5, //五颗星
-				CLS_ON = 'on',
-				CLS_HALF = 'half',
-				CLS_OFF = 'off'
-	export default {
+const LENGTH = 5, //五颗星
+	CLS_ON = 'on',
+	CLS_HALF = 'half',
+	CLS_OFF = 'off'
+export default {
 
 	// 参数为得分和星星尺寸
 	props: {
@@ -25,16 +25,16 @@
 		},
 		itemClasses() {
 			let result = [],
-					score = Math.floor(this.score * 2) / 2,//把任何小数转换成.5
-					hasDecimal = score%1 !==0, //是否含有小数
-					integer = Math.floor(score)//取出整数部分
-			for(let i=0; i<integer; i++){
+				score = Math.floor(this.score * 2) / 2,//把任何小数转换成.5
+				hasDecimal = score % 1 !== 0, //是否含有小数
+				integer = Math.floor(score)//取出整数部分
+			for (let i = 0; i < integer; i++) {
 				result.push(CLS_ON)
 			}
-			if(hasDecimal){
+			if (hasDecimal) {
 				result.push(CLS_HALF)
 			}
-			while(result.length < LENGTH){
+			while (result.length < LENGTH) {
 				result.push(CLS_OFF)
 			}
 			return result
