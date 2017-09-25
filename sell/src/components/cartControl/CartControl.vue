@@ -1,7 +1,7 @@
 <template>
 	<!-- 商品的数量的加减 -->
 	<div class="cartControl">
-		<transition name="move" >
+		<transition name="move">
 			<div class="cart-decrease icon-remove_circle_outline" v-show="food.count>0" @click="removeCart">
 			</div>
 		</transition>
@@ -19,17 +19,20 @@ export default {
 	},
 	methods: {
 		//添加购物车数量
-		addCart() {
+		addCart(event) {
 			if (!this.food.count) {
 				Vue.set(this.food, 'count', 1)
 			} else {
 				this.food.count++
 			}
-			this.$emit('add',event.target)
+			this.$emit('add', event.target)
 		},
 		//移除购物车数量
-		removeCart() {
-			if (this.food.count > 0) {
+		removeCart(event) {
+			if (!event._constructed) {
+				return;
+			}
+			if (this.food.count) {
 				this.food.count--
 			}
 		}
