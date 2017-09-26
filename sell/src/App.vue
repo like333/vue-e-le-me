@@ -13,33 +13,40 @@
       </div>
     </div>
     <div class="content">
-      <router-view :seller="seller"></router-view>
+      <keep-alive>
+        <router-view :seller="seller"></router-view>
+      </keep-alive>
     </div>
   </div>
-
 </template>
 
 <script>
-  import header from './components/header/header.vue'
-  const ERR_OK = 0
-  export default {
-    data() {
-      return {
-        seller: {}
+import header from '@/components/header/header.vue'
+import { urlParse } from '@/common/js/util'
+const ERR_OK = 0
+export default {
+  data() {
+    return {
+      seller: {
+        id: (() => {
+          let queryParam = urlParse()
+          return queryParam.id
+        })()
       }
-    },
-    created() {
-      this.$http.get('/api/seller').then(res => {
-        res = res.body
-        if(res.errno === ERR_OK){
-          this.seller = res.data
-        }
-      })
-    },
-    components: {
-      'v-header': header
     }
+  },
+  created() {
+    this.$http.get('/api/seller?id=' + this.seller.id).then(res => {
+      res = res.body
+      if (res.errno === ERR_OK) {
+        this.seller = Object.assign({}, this.seller, res.data)
+      }
+    })
+  },
+  components: {
+    'v-header': header
   }
+}
 
 </script>
 
